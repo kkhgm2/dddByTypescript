@@ -1,8 +1,21 @@
 import { Member } from "../entity/Member"
+import { MailAddress } from "../value/MailAddress";
 
-describe("", () => {
+describe("mailAddress", () => {
+    // モック化する！！
+    // test('インスタンス作成失敗', async () => {
+    //     expect(() => new MailAddress("aaaa.com"))
+    //         .toThrow("メールアドレスが重複しています");
+    // })
 
-    test('create new user', async () => {
+    test('インスタンス作成成功', async () => {
+        const mail = new MailAddress("aaaa.com");
+        expect(mail.mailAddress).toBe("aaaa.com")
+    })
+})
+
+describe("member", () => {
+    test('インスタンス作成確認', async () => {
         const memerData = {
             id: 1,
             name: "higami",
