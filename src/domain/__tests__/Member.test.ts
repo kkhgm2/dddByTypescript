@@ -1,9 +1,20 @@
+import { mockClear, mockReset } from "jest-mock-extended";
 import { Member } from "../entity/Member"
 import { MailAddress } from "../value/MailAddress";
 
 describe("mailAddress", () => {
-    // モック化する！！
+    const spy = jest.spyOn(MailAddress.prototype as any, "isDuplicateMailAddress");
+
+    beforeEach(() => {
+        // console.log(spy.mock.calls)
+        spy.mockClear();
+        jest.clearAllMocks();
+    });
+
     // test('インスタンス作成失敗', async () => {
+
+    //     spy.mockImplementation(() => false)
+
     //     expect(() => new MailAddress("aaaa.com"))
     //         .toThrow("メールアドレスが重複しています");
     // })

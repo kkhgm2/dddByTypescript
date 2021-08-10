@@ -13,8 +13,6 @@ describe("MemberRepository", () => {
 
     test('検索失敗', async () => {
         const repo: MemberRepository = new MemberRepositoryImplStub();
-        repo.getUniqueMember(2)
-        expect(repo.getUniqueMember(2)).resolves
-            .toThrow("メールアドレスが重複しています");
+        expect(repo.getUniqueMember(2)).rejects.toEqual(new Error('メンバーがいません'))
     })
 })
