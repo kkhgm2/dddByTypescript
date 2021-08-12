@@ -1,5 +1,5 @@
-import prisma from "../../client";
-import { Member } from "../../domain/entity/Member";
+import prisma from "../../../client";
+import { Member } from "../../../domain/entity/Member";
 import { MemberRepository } from "./MemberRepository";
 
 export class MemberRepositoryImpl implements MemberRepository {

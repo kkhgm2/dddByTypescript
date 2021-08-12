@@ -1,8 +1,7 @@
 import express from 'express'
 import { User } from '../../User';
-import { MemberRepository } from '../infra/repository/MemberRepository';
-import { MemberRepositoryImpl } from '../infra/repository/MemberRepositoryImpl';
-import { MemberRepositoryImplStub } from '../infra/repository/MemberRepositoryImplStub';
+import { MemberRepository } from '../infra/repository/member/MemberRepository';
+import { MemberRepositoryImpl } from '../infra/repository/member/MemberRepositoryImpl';
 
 import { MemberService } from '../useCase/MemberService';
 const app: express.Express = express()

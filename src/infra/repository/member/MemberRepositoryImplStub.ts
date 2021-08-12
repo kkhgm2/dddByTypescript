@@ -1,4 +1,4 @@
-import { Member } from "../../domain/entity/Member";
+import { Member } from "../../../domain/entity/Member";
 import { MemberRepository } from "./MemberRepository";
 
 export class MemberRepositoryImplStub implements MemberRepository {

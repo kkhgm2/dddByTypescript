@@ -1,5 +1,5 @@
-import { MemberRepository } from "../../infra/repository/MemberRepository";
-import { MemberRepositoryImplStub } from "../../infra/repository/MemberRepositoryImplStub";
+import { MemberRepository } from "../../infra/repository/member/MemberRepository";
+import { MemberRepositoryImplStub } from "../../infra/repository/member/MemberRepositoryImplStub";
 import { MemberService } from "../MemberService";
 
 describe("memberService", () => {

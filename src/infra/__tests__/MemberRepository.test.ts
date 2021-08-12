@@ -1,6 +1,6 @@
 import { Member } from "../../domain/entity/Member";
-import { MemberRepository } from "../repository/MemberRepository"
-import { MemberRepositoryImplStub } from "../repository/MemberRepositoryImplStub"
+import { MemberRepository } from "../repository/member/MemberRepository";
+import { MemberRepositoryImplStub } from "../repository/member/MemberRepositoryImplStub";
 
 
 describe("MemberRepository", () => {

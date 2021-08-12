@@ -1,4 +1,4 @@
-import { MemberRepository } from "../infra/repository/MemberRepository";
+import { MemberRepository } from "../infra/repository/member/MemberRepository";
 
 export class MemberService {
     memberRepository: MemberRepository;

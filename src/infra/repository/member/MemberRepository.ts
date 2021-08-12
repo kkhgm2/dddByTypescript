@@ -1,4 +1,4 @@
-import { Member } from "../../domain/entity/Member";
+import { Member } from "../../../domain/entity/Member";
 
 export interface MemberRepository {
     getUniqueMember(memberId: number): Promise<Member>;
