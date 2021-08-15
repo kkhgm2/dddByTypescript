@@ -1,6 +1,7 @@
 import { Member } from "../entity/Member";
 import { Team } from "../entity/Team";
 import { TeamName } from "../value/TeamName";
+import { ZaisekiStatus } from "../value/ZaisekiStatus";
 
 
 describe("teamName", () => {
@@ -54,14 +55,14 @@ describe("team", () => {
         id: 1,
         name: "higami",
         mailAddress: "aaa.com",
-        zaisekiStatus: "iru"
+        zaisekiStatus: ZaisekiStatus.Kyukai
     }
 
     const m2 = {
         id: 2,
         name: "ishihara",
         mailAddress: "bbb.com",
-        zaisekiStatus: "iru"
+        zaisekiStatus: ZaisekiStatus.Zaiseki
     }
 
     const members = [new Member(m1), new Member(m2)];

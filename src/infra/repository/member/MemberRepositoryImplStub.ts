@@ -1,4 +1,5 @@
 import { Member } from "../../../domain/entity/Member";
+import { ZaisekiStatus } from "../../../domain/value/ZaisekiStatus";
 import { MemberRepository } from "./MemberRepository";
 
 export class MemberRepositoryImplStub implements MemberRepository {
@@ -12,7 +13,7 @@ export class MemberRepositoryImplStub implements MemberRepository {
                 id: 1,
                 name: "stub",
                 mailAddress: "stub.com",
-                zaisekiStatus: "iru"
+                zaisekiStatus: ZaisekiStatus.Zaiseki
             }
         }
 

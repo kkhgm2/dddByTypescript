@@ -1,6 +1,7 @@
 import { mockClear, mockReset } from "jest-mock-extended";
 import { Member } from "../entity/Member"
 import { MailAddress } from "../value/MailAddress";
+import { ZaisekiStatus } from "../value/ZaisekiStatus";
 
 describe("mailAddress", () => {
     const spy = jest.spyOn(MailAddress.prototype as any, "isDuplicateMailAddress");
@@ -31,9 +32,28 @@ describe("member", () => {
             id: 1,
             name: "higami",
             mailAddress: "aaa.com",
-            zaisekiStatus: "iru"
+            zaisekiStatus: ZaisekiStatus.Zaiseki
         }
         const member = new Member(memerData);
-        expect(member.name).toBe(memerData.name);
+        expect(member.name).toBe("higami");
+        expect(member.zaisekiStatus.status).toBe(0);
     })
+})
+
+
+describe("zaiseki", () => {
+    test('インスタンス作成確認', async () => {
+        const zaiseki = new ZaisekiStatus(1)
+        expect(zaiseki.status).toBe(ZaisekiStatus.Kyukai);
+    })
+
+    test('ステータス外１', async () => {
+        expect(() => new ZaisekiStatus(5)).toThrow("ステータスは設定されている物を使用してください")
+    })
+    test('ステータス外２', async () => {
+        expect(() => new ZaisekiStatus(-1)).toThrow("ステータスは設定されている物を使用してください")
+    })
+    // test('半角', async () => {
+    //     expect(() => new ZaisekiStatus("２")).toThrow("ステータスは半角数字にしてください")
+    // })
 })
