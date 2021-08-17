@@ -16,6 +16,8 @@ model Member {
   mailAddress String
   zaisekiStatus String
   teams TeamMembers[]
+  subjects MemberSubjects[]
+  pairs PairMembers[]
 }
 
 model Team {
@@ -34,4 +36,32 @@ model TeamMembers {
   @@id([teamId, memberId])
 }
 
+model Subject {
+  id        Int         @id @default(autoincrement())
+  name      String
+  members MemberSubjects[]
+}
 
+model MemberSubjects {
+  member     Member     @relation(fields: [memberId], references: [id])
+  memberId   Int
+  subject    Subject    @relation(fields: [subjectId], references: [id])
+  subjectId   Int
+  joinedAt DateTime @default(now())
+  @@id([subjectId, memberId])
+}
+
+model Pair {
+  id        Int         @id @default(autoincrement())
+  name      String
+  members PairMembers[]
+}
+
+model PairMembers {
+  member     Member     @relation(fields: [memberId], references: [id])
+  memberId   Int
+  pair    Pair    @relation(fields: [pairId], references: [id])
+  pairId   Int
+  joinedAt DateTime @default(now())
+  @@id([pairId, memberId])
+}
