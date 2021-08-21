@@ -14,7 +14,7 @@ model Member {
   id        Int         @id @default(autoincrement())
   name      String
   mailAddress String
-  zaisekiStatus String
+  zaisekiStatus Int @default(0)
   teams TeamMembers[]
   subjects MemberSubjects[]
   pairs PairMembers[]
