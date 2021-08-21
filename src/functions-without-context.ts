@@ -7,24 +7,24 @@ interface CreateUser {
 }
 
 export async function createUser(user: CreateUser) {
-    if(user.acceptTermsAndConditions) {
+    if (user.acceptTermsAndConditions) {
         return await prisma.user.create({
-            data:user,
+            data: user,
         })
-    }else {
+    } else {
         return new Error('user must accept terms')
     }
 }
 
 interface UpdateUser {
-    id:number
-    name:string
-    email:string
+    id: number
+    name: string
+    email: string
 }
 
 export async function updataUserName(user: UpdateUser) {
     return await prisma.user.update({
-        where:{id: user.id},
-        data:user,
+        where: { id: user.id },
+        data: user,
     })
 }

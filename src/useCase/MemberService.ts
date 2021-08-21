@@ -1,3 +1,4 @@
+import { Member } from "../domain/entity/Member";
 import { MemberRepository } from "../infra/repository/member/MemberRepository";
 
 export class MemberService {
@@ -7,7 +8,7 @@ export class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public getMembers(memberId: number) {
+    public getMembers(memberId: number): Promise<Member> {
         return this.memberRepository.getUniqueMember(memberId);
     }
 }

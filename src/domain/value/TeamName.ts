@@ -1,4 +1,3 @@
-import prisma from "../../client";
 
 export class TeamName {
     public readonly name: number;

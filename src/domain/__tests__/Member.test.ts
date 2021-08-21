@@ -1,30 +1,11 @@
 import { mockClear, mockReset } from "jest-mock-extended";
+import { MemberRepositoryImpl } from "../../infra/repository/member/MemberRepositoryImpl";
 import { Member } from "../entity/Member"
 import { MailAddress } from "../value/MailAddress";
 import { ZaisekiStatus } from "../value/ZaisekiStatus";
-
-describe("mailAddress", () => {
-    const spy = jest.spyOn(MailAddress.prototype as any, "isDuplicateMailAddress");
-
-    beforeEach(() => {
-        // console.log(spy.mock.calls)
-        spy.mockClear();
-        jest.clearAllMocks();
-    });
-
-    // test('インスタンス作成失敗', async () => {
-
-    //     spy.mockImplementation(() => false)
-
-    //     expect(() => new MailAddress("aaaa.com"))
-    //         .toThrow("メールアドレスが重複しています");
-    // })
-
-    test('インスタンス作成成功', async () => {
-        const mail = new MailAddress("aaaa.com");
-        expect(mail.mailAddress).toBe("aaaa.com")
-    })
-})
+import prisma from "../../infra/client";
+import { prismaMock } from "../../infra/singleton";
+import { EntityFactory } from "../entity/EntityFactory";
 
 describe("member", () => {
     test('インスタンス作成確認', async () => {
@@ -34,9 +15,22 @@ describe("member", () => {
             mailAddress: "aaa.com",
             zaisekiStatus: ZaisekiStatus.Zaiseki
         }
-        const member = new Member(memerData);
-        expect(member.name).toBe("higami");
-        expect(member.zaisekiStatus.status).toBe(0);
+        const member = EntityFactory.memberCreate(memerData);
+        expect((await member).name).toBe("higami");
+        expect((await member).zaisekiStatus.status).toBe(0);
+    })
+
+    test('インスタンス失敗確認', async () => {
+        const memerData = {
+            id: 1,
+            name: "higami",
+            mailAddress: "aaa.com",
+            zaisekiStatus: ZaisekiStatus.Zaiseki
+        }
+
+        prismaMock.member.count.mockResolvedValue(1);
+        expect(EntityFactory.memberCreate(memerData))
+            .rejects.toEqual(new Error("メールアドレスが重複しています"));
     })
 })
 

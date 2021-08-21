@@ -1,23 +1,19 @@
-import prisma from "../../client";
+import prisma from "../../infra/client";
 
 export class MailAddress {
     public readonly mailAddress: string;
 
-    public constructor(mailAddress: string) {
-        if (this.isDuplicateMailAddress(mailAddress)) {
-            this.mailAddress = mailAddress;
-        } else {
-            throw new Error("メールアドレスが重複しています");
-        }
+    constructor(mailAddress: string) {
+        this.mailAddress = mailAddress;
     }
 
-    private isDuplicateMailAddress(mailAddress: string): boolean {
-        // const mailAddressCount: number = await prisma.member.count({
-        //     where: {
-        //         mailAddress: mailAddress
-        //     }
-        // })
-        const mailAddressCount = 0;
-        return mailAddressCount == 0;
+    static async isDuplicated(mailAddress: string): Promise<boolean> {
+        const mailAddressCount = await prisma.member.count({
+            where: {
+                mailAddress: mailAddress
+            }
+        })
+
+        return mailAddressCount > 0;
     }
 }
