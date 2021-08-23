@@ -15,14 +15,17 @@ export class MemberRepositoryImpl implements MemberRepository {
         return Member.factory({ ...memberRecords });
     }
 
-    public async getAllMember() {
-        const users = await prisma.member.findMany();
-        return users;
+    public async getAllMember(): Promise<Member[]> {
+        const members = await prisma.member.findMany({
+            orderBy: {
+                id: 'asc'
+            }
+        });
+
+        return members.map((mem) => Member.factory({ ...mem }))
     }
 
     public async createMember(member: Member): Promise<Member> {
-        console.log(member)
-
         const { name, mailAddress, zaisekiStatus } = member;
         const result = await prisma.member.create({
             data: {

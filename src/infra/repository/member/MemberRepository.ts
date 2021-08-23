@@ -6,4 +6,6 @@ export interface MemberRepository {
     createMember(member: Member): Promise<Member>;
 
     updateMember(member: Member): Promise<Member>
+
+    getAllMember(): Promise<Member[]>;
 }

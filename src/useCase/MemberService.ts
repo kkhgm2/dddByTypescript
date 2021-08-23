@@ -12,6 +12,10 @@ export class MemberService {
         return this.memberRepository.getUniqueMember(memberId);
     }
 
+    public getAllMember() {
+        return this.memberRepository.getAllMember();
+    }
+
     public async createMember(member: { id: number; name: string, mailAddress: string, zaisekiStatus: number }) {
         const result = await Member.canCreate(member);
         if (result) {
