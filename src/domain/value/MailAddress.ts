@@ -3,7 +3,7 @@ import prisma from "../../infra/client";
 export class MailAddress {
     public readonly mailAddress: string;
 
-    constructor(mailAddress: string) {
+    private constructor(mailAddress: string) {
         this.mailAddress = mailAddress;
     }
 
@@ -14,6 +14,14 @@ export class MailAddress {
             }
         })
 
-        return mailAddressCount > 0;
+        if (mailAddressCount > 0) {
+            throw new Error('メールアドレスが重複しています');
+        } else {
+            return false;
+        }
+    }
+
+    static factory(mailAddress: string): MailAddress {
+        return new MailAddress(mailAddress)
     }
 }

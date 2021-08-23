@@ -12,14 +12,14 @@ describe("mailAddress", () => {
         });
 
         prismaMock.member.count.mockResolvedValue(0);
-        const target = ValueFactory.mailAddressFactory("aaaa.com");
+        const target = MailAddress.isDuplicated("aaaa.com");
         expect(target)
-            .resolves.toEqual(new MailAddress("aaaa.com"))
+            .resolves.toEqual(false)
     })
 
     test('インスタンス作成失敗', async () => {
         prismaMock.member.count.mockResolvedValue(1);
-        expect(() => ValueFactory.mailAddressFactory("aaaa.com"))
+        expect(() => MailAddress.isDuplicated("aaaa.com"))
             .rejects.toEqual(new Error("メールアドレスが重複しています"));
     })
 })

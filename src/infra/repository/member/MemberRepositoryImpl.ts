@@ -12,8 +12,7 @@ export class MemberRepositoryImpl implements MemberRepository {
         });
         if (memberRecords == null) throw Error("メンバーがいません");
 
-        const member = EntityFactory.memberFind({ ...memberRecords });
-        return member;
+        return Member.factory({ ...memberRecords });
     }
 
     public async getAllMember() {
@@ -21,17 +20,33 @@ export class MemberRepositoryImpl implements MemberRepository {
         return users;
     }
 
-    // public async getMembers(memberId: number): Promise<Member[]> {
-    //     const memberRecords = await prisma.member.findMany({
-    //         where: {
-    //             id: memberId
-    //         }
-    //     });
-    //     if (memberRecords == null) throw Error("メンバーがいません");
+    public async createMember(member: Member): Promise<Member> {
+        console.log(member)
 
-    //     const members = memberRecords.map((member) => {
-    //         new Member(member)
-    //     })
-    //     return members;
-    // }
+        const { name, mailAddress, zaisekiStatus } = member;
+        const result = await prisma.member.create({
+            data: {
+                name: name,
+                mailAddress: mailAddress.mailAddress,
+                zaisekiStatus: zaisekiStatus.status
+            }
+        });
+
+        return Member.factory({ ...result });
+    }
+
+    public async updateMember(member: Member): Promise<Member> {
+        const result = await prisma.member.update({
+            where: {
+                id: member.id
+            },
+            data: {
+                name: member.name,
+                mailAddress: member.mailAddress.mailAddress,
+                zaisekiStatus: member.zaisekiStatus.status
+            }
+        });
+
+        return Member.factory({ ...result });
+    }
 }

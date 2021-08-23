@@ -8,29 +8,37 @@ import { prismaMock } from "../../infra/singleton";
 import { EntityFactory } from "../entity/EntityFactory";
 
 describe("member", () => {
+    const memerData = {
+        id: 1,
+        name: "higami",
+        mailAddress: "aaa.com",
+        zaisekiStatus: ZaisekiStatus.Zaiseki
+    }
+
     test('インスタンス作成確認', async () => {
-        const memerData = {
-            id: 1,
-            name: "higami",
-            mailAddress: "aaa.com",
-            zaisekiStatus: ZaisekiStatus.Zaiseki
-        }
-        const member = EntityFactory.memberCreate(memerData);
+        prismaMock.member.count.mockResolvedValue(0);
+        // MailAddress.isDuplicated("aaa.com");
+
+        const member = Member.factory(memerData);
         expect((await member).name).toBe("higami");
         expect((await member).zaisekiStatus.status).toBe(0);
+
+        // expect(async () => {
+        //     const result = Member.canCreate(memerData);
+        //     if (await result) {
+        //         return Member.factory(memerData);
+        //     }
+        // }).resolves.toEqual(new Error("メールアドレスが重複しています"));
     })
 
     test('インスタンス失敗確認', async () => {
-        const memerData = {
-            id: 1,
-            name: "higami",
-            mailAddress: "aaa.com",
-            zaisekiStatus: ZaisekiStatus.Zaiseki
-        }
-
         prismaMock.member.count.mockResolvedValue(1);
-        expect(EntityFactory.memberCreate(memerData))
-            .rejects.toEqual(new Error("メールアドレスが重複しています"));
+        expect(async () => {
+            const result = Member.canCreate(memerData);
+            if (await result) {
+                return Member.factory(memerData);
+            }
+        }).rejects.toEqual(new Error("メールアドレスが重複しています"));
     })
 })
 
@@ -42,10 +50,22 @@ describe("zaiseki", () => {
     })
 
     test('ステータス外１', async () => {
-        expect(() => new ZaisekiStatus(5)).toThrow("ステータスは設定されている物を使用してください")
+        expect(() => new ZaisekiStatus(3)).toThrow("ステータスは設定されている物を使用してください")
     })
     test('ステータス外２', async () => {
         expect(() => new ZaisekiStatus(-1)).toThrow("ステータスは設定されている物を使用してください")
+    })
+    test('ステータス外3', async () => {
+        const status = new ZaisekiStatus(0)
+        expect(status.status).toBe(ZaisekiStatus.Zaiseki)
+    })
+    test('ステータス外4', async () => {
+        const status = new ZaisekiStatus(1)
+        expect(status.status).toBe(ZaisekiStatus.Kyukai)
+    })
+    test('ステータス外5', async () => {
+        const status = new ZaisekiStatus(2)
+        expect(status.status).toBe(ZaisekiStatus.Taikai)
     })
     // test('半角', async () => {
     //     expect(() => new ZaisekiStatus("２")).toThrow("ステータスは半角数字にしてください")

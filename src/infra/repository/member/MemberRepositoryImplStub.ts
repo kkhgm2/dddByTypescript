@@ -19,7 +19,6 @@ export class MemberRepositoryImplStub implements MemberRepository {
 
         if (memberRecords == null) throw Error("メンバーがいません");
 
-        const member = new Member({ ...memberRecords });
-        return member;
+        return Member.factory({ ...memberRecords });
     }
 }
