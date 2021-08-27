@@ -1,4 +1,3 @@
-import { throws } from "assert";
 import { MailAddress } from "../value/MailAddress";
 import { ZaisekiStatus } from "../value/ZaisekiStatus";
 

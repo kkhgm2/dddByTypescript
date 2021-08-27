@@ -13,6 +13,7 @@ export class MailAddress {
                 mailAddress: mailAddress
             }
         })
+        console.log(`${mailAddress} : ${mailAddressCount}`)
 
         if (mailAddressCount > 0) {
             throw new Error('メールアドレスが重複しています');
