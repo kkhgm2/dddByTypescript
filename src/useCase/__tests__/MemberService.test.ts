@@ -1,9 +1,6 @@
-import { Member } from "../../domain/entity/Member";
 import { ZaisekiStatus } from "../../domain/value/ZaisekiStatus";
-import prisma from "../../infra/client";
 import { MemberRepository } from "../../infra/repository/member/MemberRepository";
 import { MemberRepositoryImpl } from "../../infra/repository/member/MemberRepositoryImpl";
-import { MemberRepositoryImplStub } from "../../infra/repository/member/MemberRepositoryImplStub";
 import { prismaMock } from "../../infra/singleton";
 import { MemberService } from "../MemberService";
 
@@ -80,6 +77,25 @@ describe("memberService", () => {
 
     test('更新失敗', async () => {
 
+
+    })
+})
+
+import { PrismaClient } from "@prisma/client";
+
+describe.only('', () => {
+    const prisma = new PrismaClient();
+    const repo: MemberRepository = new MemberRepositoryImpl();
+    const service: MemberService = new MemberService(repo);
+
+    test('select', () => {
+        const member = prisma.member.findMany({
+            orderBy: {
+                id: 'asc'
+            }
+        })
+
+        member.then(v => console.log(v))
 
     })
 })

@@ -52,4 +52,14 @@ export class MemberRepositoryImpl implements MemberRepository {
 
         return Member.factory({ ...result });
     }
+
+    public async deleteMember(memberId: number): Promise<Member> {
+        const result = await prisma.member.delete({
+            where: {
+                id: memberId
+            }
+        });
+
+        return Member.factory({ ...result });
+    }
 }

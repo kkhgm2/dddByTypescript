@@ -8,4 +8,7 @@ export interface MemberRepository {
     updateMember(member: Member): Promise<Member>
 
     getAllMember(): Promise<Member[]>;
+
+    deleteMember(memberId: number): Promise<Member>;
+
 }

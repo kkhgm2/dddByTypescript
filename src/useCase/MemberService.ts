@@ -1,4 +1,5 @@
 import { Member } from "../domain/entity/Member";
+import { MailAddress } from "../domain/value/MailAddress";
 import { MemberRepository } from "../infra/repository/member/MemberRepository";
 
 export class MemberService {
@@ -23,12 +24,22 @@ export class MemberService {
         }
     }
 
-    public async updateMember(member: { id: number; name: string, mailAddress: string, zaisekiStatus: number }) {
-        const currentMember = await this.getUniqueMember(member.id);
-        const result = await Member.canCreate(member);
+    public async updateMember(newMemberInfo: { id: number; name: string, mailAddress: string, zaisekiStatus: number }) {
+        const currentMember = await this.getUniqueMember(newMemberInfo.id);
+        const isDuplicate = await MailAddress.isDuplicatedExceptMyself(newMemberInfo.mailAddress, newMemberInfo.id)
 
-        if (currentMember != null && result) {
-            return this.memberRepository.updateMember(Member.factory(member));
+        if (currentMember != null && !isDuplicate) {
+            const updateResult = await this.memberRepository.updateMember(Member.factory(newMemberInfo));
+            return updateResult;
+        }
+    }
+
+    public async deleteMember(id: number) {
+        const currentMember = await this.getUniqueMember(id);
+
+        if (currentMember != null) {
+            const updateResult = await this.memberRepository.deleteMember(id);
+            return updateResult;
         }
     }
 }
