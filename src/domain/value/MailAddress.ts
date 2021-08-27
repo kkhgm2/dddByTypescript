@@ -13,7 +13,24 @@ export class MailAddress {
                 mailAddress: mailAddress
             }
         })
-        console.log(`${mailAddress} : ${mailAddressCount}`)
+
+        if (mailAddressCount > 0) {
+            throw new Error('メールアドレスが重複しています');
+        } else {
+            return false;
+        }
+    }
+
+    // 自身以外にメールアドレスがないかを確認　更新時に使用想定
+    static async isDuplicatedExceptMyself(mailAddress: string, userId: number): Promise<boolean> {
+        const mailAddressCount = await prisma.member.count({
+            where: {
+                mailAddress: mailAddress
+                , id: {
+                    not: userId
+                }
+            }
+        })
 
         if (mailAddressCount > 0) {
             throw new Error('メールアドレスが重複しています');
