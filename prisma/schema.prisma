@@ -22,15 +22,15 @@ model Member {
 
 model Team {
   id        Int         @id @default(autoincrement())
-  name      String
+  name      Int
   members TeamMembers[]
 }
 
 model TeamMembers {
-  member     Member     @relation(fields: [memberId], references: [id])
-  memberId   Int
   team     Team     @relation(fields: [teamId], references: [id])
   teamId   Int
+  member     Member     @relation(fields: [memberId], references: [id])
+  memberId   Int
   joinedAt DateTime @default(now())
 
   @@id([teamId, memberId])
@@ -43,10 +43,10 @@ model Subject {
 }
 
 model MemberSubjects {
-  member     Member     @relation(fields: [memberId], references: [id])
-  memberId   Int
   subject    Subject    @relation(fields: [subjectId], references: [id])
   subjectId   Int
+  member     Member     @relation(fields: [memberId], references: [id])
+  memberId   Int
   joinedAt DateTime @default(now())
   @@id([subjectId, memberId])
 }
@@ -58,10 +58,10 @@ model Pair {
 }
 
 model PairMembers {
-  member     Member     @relation(fields: [memberId], references: [id])
-  memberId   Int
   pair    Pair    @relation(fields: [pairId], references: [id])
   pairId   Int
+  member     Member     @relation(fields: [memberId], references: [id])
+  memberId   Int
   joinedAt DateTime @default(now())
   @@id([pairId, memberId])
 }

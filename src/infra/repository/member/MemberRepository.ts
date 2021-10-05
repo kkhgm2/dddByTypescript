@@ -11,4 +11,6 @@ export interface MemberRepository {
 
     deleteMember(memberId: number): Promise<Member>;
 
+    getMembers(id: number[]): Promise<Member[]>
+
 }
